@@ -9,7 +9,7 @@ public interface KlientService {
     KlientDto saveKlient(KlientDto klientDto) throws ValidationException;
     void deleteklient(Integer id_klient);
     KlientDto findByPasport(String pasport);
-    KlientDto findById();
-    List<KlientDto> findAll();
+    KlientDto findById(Integer id_klient);
+   List<KlientDto> findAll();
 
 }

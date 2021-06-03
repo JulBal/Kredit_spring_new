@@ -39,7 +39,7 @@ public class KlientController {
     @GetMapping("/find/{id}")
     public KlientDto findKlient(@RequestParam Integer id){
         log.info("Поиск всех клиентов");
-        return klientService.findById();
+        return klientService.findById(id);
     }
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<Void> deleteKlient(@PathVariable Integer id){

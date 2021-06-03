@@ -35,14 +35,14 @@ public class DefaultKlientService implements KlientService {
         if (isFone == false) {
             throw new ValidationException("Некорректный номер телефона");
         }
-        Boolean isEmail = Pattern.matches("[a-zA-Z0-9]{1,}[@]{1}[a-z]{5,}[.]{1}+[a-z]{3}", klientDto.getEmail());
+        Boolean isEmail = Pattern.matches("[a-zA-Z0-9]{1,}[@]{1}[a-z]{2,}[.]{1}+[a-z]{2}", klientDto.getEmail());
         if (isNull(klientDto.getEmail()) || klientDto.getEmail().isEmpty()) {
             throw new ValidationException("Отсутствует email");
         }
         if (isEmail == false) {
           throw new ValidationException("Некорректный email");
         }
-        Boolean isPasport = Pattern.matches("^([0-9]{6})?$", klientDto.getPasport());
+        Boolean isPasport = Pattern.matches("^([0-9]{10})?$", klientDto.getPasport());
         if (isNull(klientDto.getPasport()) || klientDto.getPasport().isEmpty()) {
             throw new ValidationException("Отсутствует паспорт");
         }
@@ -73,8 +73,8 @@ public class DefaultKlientService implements KlientService {
     }
 
     @Override
-    public KlientDto findById() {
-        Klient klient=klientRepository.findById();
+    public KlientDto findById(Integer id) {
+        Klient klient=klientRepository.getById(id);
         if (klient!=null){
             return klientConverter.fromKlienttoKlientDto(klient);
         }
