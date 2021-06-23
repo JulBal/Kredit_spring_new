@@ -62,7 +62,10 @@ public class DefaultKlientService implements KlientService {
     public void deleteklient(Integer id_klient) {
         klientRepository.deleteById(id_klient);
     }
-
+    @Override
+    public void deleteKlientPasport(String pasport) {
+        klientRepository.deleteByPasport(pasport);
+    }
     @Override
     public KlientDto findByPasport(String pasport) {
         Klient klient=klientRepository.findByPasport(pasport);

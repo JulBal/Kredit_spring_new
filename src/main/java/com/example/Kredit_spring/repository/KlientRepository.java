@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface KlientRepository extends JpaRepository<Klient,Integer> {
     Klient findByPasport(String pasport);
+    void deleteByPasport(String pasport);
 }

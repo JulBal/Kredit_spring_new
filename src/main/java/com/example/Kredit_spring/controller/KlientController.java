@@ -47,4 +47,10 @@ public class KlientController {
         klientService.deleteklient(id);
         return ResponseEntity.ok().build();
     }
+  /*  @DeleteMapping("/delete/{pasport}")
+    public ResponseEntity<Void> deleteKlient(@PathVariable String pasport){
+        log.info("удаление записи о клиенте по паспорту");
+        klientService.deleteKlientPasport(pasport);
+        return ResponseEntity.ok().build();
+    }*/
 }
