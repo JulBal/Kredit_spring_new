@@ -8,10 +8,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Slf4j
 @Controller
 public class HelloWorldController {
-    @RequestMapping("/greeting")
+    @RequestMapping("/klientForm")
     public String helloWorldController(@RequestParam(name = "name", required = false, defaultValue = "World") String name, Model model) {
         log.info("com.example.Kredit_spring.controller.start");
         model.addAttribute("name", name);
-        return "greeting";
+        return "klientForm";
     }
 }
