@@ -25,7 +25,7 @@
     </style>
 </head>
 <body>
-<h2>HTML Table</h2>
+<h2>Форма оформления клиента</h2>
 
 <table id="klientsList"></table>
 <form action="#">
@@ -44,13 +44,6 @@
     <button onclick="createKredit()">Добавить вид кредита</button>
 </form>
 <script>
-
-    function createKlientKredit(klientId) {
-        var xhtpp = new XMLHttpRequest();
-        xhtpp.open("DELETE", "http://localhost:8081/klient/delete/" + klientId, true);
-        xhtpp.send();
-    }
-
 
     function createKlient() {
         var klientFIO = document.getElementById("klient_fio").value;
@@ -100,7 +93,8 @@
                         '        <td>' + klient.fone + '</td>\n' +
                         '        <td>' + klient.pasport + '</td>' +
                         '        <td><button onclick="deleteKlient(' + klient.id + ')">Удалить клиента</button>' +
-                        '<button onclick="createKlientKredit(' + klient.id + ')">Оформить кредит</button></td></tr>';
+                        '<button onclick="document.location=\'http://localhost:8081/offerForm\'">Оформить кредит</button></td></tr>';
+
 
                 }
                 document.getElementById("klientsList").innerHTML = html;
@@ -109,7 +103,6 @@
         xhttp.open("GET", "http://localhost:8081/klient/findAll", true);
         xhttp.send();
     }
-
 
 
     function createKredit() {
@@ -164,14 +157,8 @@
     }
 
 
-
-
     loadKlient();
     loadKredit();
-
-
-
-
 
 
 </script>
