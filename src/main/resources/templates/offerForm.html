@@ -6,21 +6,23 @@
 
 </head>
 <head>
-    <style>
-        table {
-            font-family: arial, sans-serif;
-            border-collapse: collapse;
-            width: 100%;
+    <style type="text/css">
+        TABLE {
+            border-collapse: collapse; /* Убираем двойные линии между ячейками */
+            width: 100%; /* Ширина таблицы */
         }
 
-        td, th {
-            border: 1px solid #dddddd;
-            text-align: left;
-            padding: 8px;
+        TH, TD {
+            border: 1px solid black; /* Параметры рамки */
+            text-align: center; /* Выравнивание по центру */
+            padding: 4px; /* Поля вокруг текста */
         }
 
-        tr:nth-child(even) {
-            background-color: #dddddd;
+        TH {
+            background: #fc0; /* Цвет фона ячейки */
+            height: 40px; /* Высота ячеек */
+            vertical-align: bottom; /* Выравнивание по нижнему краю */
+            padding: 0; /* Убираем поля вокруг текста */
         }
     </style>
 </head>
@@ -30,63 +32,66 @@
 
 <table id="offerList"></table>
 <form action="#">
-    <input id="offer_klient" placeholder="Offer klient">
-    <input id="offer_kreditVid" placeholder="Offer kreditVid">
-    <input id="offer_summa" placeholder="Offer summa">
+    <input id="offer_klient" placeholder="FIO">
+    <input id="offer_kreditVid" placeholder="Вид кредита">
+    <input id="offer_summa" placeholder="Сумма кредита">
     <button onclick="createOffer()">Оформить</button>
 </form>
 <script>
-    //    function createKredit() {
-    //     var kreditLimit = document.getElementById("kredit_limit").value;
-    //     var kreditStavka = document.getElementById("kredit_stavka").value;
-    //
-    //     var xmlhttpkrt = new XMLHttpRequest();   // new HttpRequest instance
-    //     xmlhttpkrt.open("POST", "http://localhost:8081/kredit/save");
-    //     xmlhttpkrt.setRequestHeader("Content-Type", "application/json");
-    //     xmlhttpkrt.send(JSON.stringify({limit: kreditLimit, stavka: kreditStavka}));
-    //     xmlhttpkrt.onreadystatechange = function () {
-    //         if (this.readyState == 4 && this.status == 200) {
-    //             loadKredit();
-    //         }
-    //
-    //     }
-    // }
+    function createOffer() {
+        var id_klient = document.getElementById("offer_klient").value;
+        var id_kredit = document.getElementById("offer_kreditVid").value;
+        var summa = document.getElementById("offer_summa").value;
+        var id_graph =0;
 
-    // function deleteKredit(kreditId) {
-    //     var xhtpp = new XMLHttpRequest();
-    //     xhtpp.open("DELETE", "http://localhost:8081/kredit/delete/" + kreditId, true);
-    //     xhtpp.send();
-    // }
-    //
-    // function loadKredit() {
-    //     var xhttpkrt = new XMLHttpRequest();
-    //     xhttpkrt.onreadystatechange = function () {
-    //         if (this.readyState == 4 && this.status == 200) {
-    //             var kredits = JSON.parse(this.responseText);
-    //
-    //             var htmlkrt = '<tr>\n' +
-    //                 '        <th>Kredit id</th>\n' +
-    //                 '        <th>Kredit Limit</th>\n' +
-    //                 '        <th>Kredit Stavka</th>\n' +
-    //                 '    </tr>';
-    //             for (var i = 0; i < kredits.length; i++) {
-    //                 var kredit = kredits[i];
-    //                 console.log(kredit);
-    //
-    //                 htmlkrt = htmlkrt + '<tr>' +
-    //                     '<td>' + kredit.id + '</td>\n' +
-    //                     '        <td>' + kredit.limit + '</td>\n' +
-    //                     '        <td>' + kredit.stavka + '</td>\n' +
-    //                     '        <td><button onclick="deleteKredit(' + kredit.id + ')">Удалить</button></td></tr>';
-    //
-    //             }
-    //             document.getElementById("kreditsList").innerHTML = htmlkrt;
-    //         }
-    //     };
-    //     xhttpkrt.open("GET", "http://localhost:8081/kredit/findAll", true);
-    //     xhttpkrt.send();
-    // }
-    // loadKredit();
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.open("POST", "http://localhost:8081/offerForm/offer/save");
+        xmlhttp.setRequestHeader("Content-Type", "application/json");
+        xmlhttp.send(JSON.stringify({id_kredit:id_kredit, id_klient: id_klient , summa: summa, id_graph: id_graph }));
+        xmlhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                loadOffer();
+            }
+
+        }
+    }
+
+    function loadOffer() {
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                var offers = JSON.parse(this.responseText);
+
+                var html = '<tr>\n' +
+                    '        <th>ID</th>\n' +
+                    '        <th>Клиент</th>\n' +
+                    '        <th>Вид кредита</th>\n' +
+                    '        <th>Сумма кредита</th>\n' +
+                    '        <th>График</th>\n' +
+                    '        <th>Действия</th>' +
+                    '    </tr>';
+                for (var i = 0; i < offers.length; i++) {
+                    var offer = offers[i];
+                    console.log(offer);
+
+                    html = html + '<tr>' +
+                        '        <td>' + offer.id + '</td>\n' +
+                        '        <td>' + offer.id_klient + '</td>\n' +
+                        '        <td>' + offer.id_kredit + '</td>\n' +
+                        '        <td>' + offer.summa+ '</td>\n' +
+                        '        <td>' + offer.id_graph+ '</td>\n' +
+                        '        <td><button onclick="deleteOffer(' + offer.id + ')">Удалить кредит</button>' ;
+
+                }
+                document.getElementById("offerList").innerHTML = html;
+            }
+        };
+        xhttp.open("GET", "http://localhost:8081/offer/findAll", true);
+        xhttp.send();
+    }
+    createOffer();
+
+
 </script>
 </body>
 </html>

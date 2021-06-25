@@ -6,23 +6,25 @@
 
 </head>
 <head>
-    <style>
-        table {
-            font-family: arial, sans-serif;
-            border-collapse: collapse;
-            width: 100%;
-        }
 
-        td, th {
-            border: 1px solid #dddddd;
-            text-align: left;
-            padding: 8px;
+        <style type="text/css">
+                              TABLE {
+                                  border-collapse: collapse; /* Убираем двойные линии между ячейками */
+                                  width: 100%; /* Ширина таблицы */
+                              }
+        TH, TD {
+            border: 1px solid black; /* Параметры рамки */
+            text-align: center; /* Выравнивание по центру */
+            padding: 4px; /* Поля вокруг текста */
         }
+        TH {
+            background: #fc0; /* Цвет фона ячейки */
+            height: 40px; /* Высота ячеек */
+            vertical-align: bottom; /* Выравнивание по нижнему краю */
+            padding: 0; /* Убираем поля вокруг текста */
+        }
+        </style>
 
-        tr:nth-child(even) {
-            background-color: #dddddd;
-        }
-    </style>
 </head>
 <body>
 <h2>Форма оформления клиента</h2>
@@ -30,19 +32,23 @@
 <table id="klientsList"></table>
 <form action="#">
 
-    <input id="klient_fio" placeholder="Klient FIO">
-    <input id="klient_email" placeholder="Klient email">
-    <input id="klient_fone" placeholder="Klient fone">
-    <input id="klient_pasport" placeholder="Klient pasport">
+    <input id="klient_fio" placeholder="ФИО">
+    <input id="klient_email" placeholder="Электронная почта">
+    <input id="klient_fone" placeholder="Номер телефона">
+    <input id="klient_pasport" placeholder="Номер паспорта">
     <button onclick="createKlient()">Добавить клиента</button>
 
 </form>
+<input id="search_pasport">
+<button onclick="searchByPasport()">Поиск по паспорту</button>
+
 <table id="kreditsList"></table>
 <form action="#">
-    <input id="kredit_limit" placeholder="Kredit Limit">
-    <input id="kredit_stavka" placeholder="Kredit Stavka">
+    <input id="kredit_limit" placeholder="Лимит по кредиту">
+    <input id="kredit_stavka" placeholder="процентная ставка">
     <button onclick="createKredit()">Добавить вид кредита</button>
 </form>
+
 <script>
 
     function createKlient() {
@@ -62,6 +68,48 @@
         }
     }
 
+    function searchByPasport() {
+        var pasport = document.getElementById("search_pasport").value;
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                var klient = JSON.parse(this.responseText);
+                var html = '<tr>\n' +
+                    '        <th>ID</th>\n' +
+                    '        <th>ФИО</th>\n' +
+                    '        <th>Электронная почта</th>\n' +
+                    '        <th>Номер телефона</th>\n' +
+                    '        <th>Номер паспорта</th>\n' +
+                    '        <th>Действия</th>' +
+                    '    </tr>';
+                    html = html + '<tr>' +
+                        '<td>' + klient.id + '</td>\n' +
+                        '        <td>' + klient.fio + '</td>\n' +
+                        '        <td>' + klient.email + '</td>\n' +
+                        '        <td>' + klient.fone + '</td>\n' +
+                        '        <td>' + klient.pasport + '</td>' +
+                        '        <td><button onclick="deleteKlient(' + klient.pasport + ')">Удалить клиента</button>'+
+                        '<button onclick="document.location=\'http://localhost:8081/offerForm\'">Оформить кредит</button></td></tr>';
+                  //      '<button onclick="getFio(' + klient.id + ')">Оформить кредит</button></td></tr>';
+                        document.getElementById("klientsList").innerHTML = html;
+            }
+        };
+        xhttp.open("GET", "http://localhost:8081/klient/findPasport?pasport=" + pasport, true);
+        xhttp.send();
+    }
+    function getFio(klientId) {
+   //     document.location='http://localhost:8081/offerForm';
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.open("POST", "http://localhost:8081/offer/save");
+        xmlhttp.setRequestHeader("Content-Type", "application/json");
+        xmlhttp.send(JSON.stringify({id_krerdit:1,id_klient: klientId,summa:0.00,id_graph:0}));
+        // xhtpp.open("GET", "http://localhost:8081/offerForm", true);
+        // xhtpp.send();
+
+   //     document.location='http://localhost:8081/klient/getFio?pasport="+ pasport'
+
+    }
+
     function deleteKlient(klientId) {
         var xhtpp = new XMLHttpRequest();
         xhtpp.open("DELETE", "http://localhost:8081/klient/delete/" + klientId, true);
@@ -75,11 +123,11 @@
                 var klients = JSON.parse(this.responseText);
 
                 var html = '<tr>\n' +
-                    '        <th>Klient id</th>\n' +
-                    '        <th>Klient FIO</th>\n' +
-                    '        <th>Klient email</th>\n' +
-                    '        <th>Klient fone</th>\n' +
-                    '        <th>Klient pasport</th>\n' +
+                    '        <th>ID</th>\n' +
+                    '        <th>ФИО</th>\n' +
+                    '        <th>Электронная почта</th>\n' +
+                    '        <th>Номер телефона</th>\n' +
+                    '        <th>Номер паспорта</th>\n' +
                     '        <th>Действия</th>' +
                     '    </tr>';
                 for (var i = 0; i < klients.length; i++) {
@@ -93,8 +141,9 @@
                         '        <td>' + klient.fone + '</td>\n' +
                         '        <td>' + klient.pasport + '</td>' +
                         '        <td><button onclick="deleteKlient(' + klient.id + ')">Удалить клиента</button>' +
+                     //   '<button onclick="getFio(' + klient.pasport + ')">Оформить кредит</button></td></tr>'+
+                    //    ' <button onclick="document.location=\'http://localhost:8081/offerForm\'+getFio('+klient.id+')">Оформить кредит</button></td></tr>';
                         '<button onclick="document.location=\'http://localhost:8081/offerForm\'">Оформить кредит</button></td></tr>';
-
 
                 }
                 document.getElementById("klientsList").innerHTML = html;

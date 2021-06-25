@@ -15,9 +15,10 @@ public class HelloWorldController {
         return "klientForm";
     }
     @RequestMapping("/offerForm")
-    public String offerController(@RequestParam(name = "name", required = false, defaultValue = "World") String name, Model model) {
+    public String offerController(@RequestParam(name = "FIO", required = false, defaultValue = "Не выбран клиент") String fio, Model model) {
         log.info("com.example.Kredit_spring.controller.start");
-        model.addAttribute("name", name);
+        model.addAttribute("FIO", fio);
         return "offerForm";
     }
+
 }
