@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class OfferDto {
     private int id;
-    private int id_krerdit;
+    private int id_kredit;
     private int id_klient;
     private double summa;
     private int id_graph;

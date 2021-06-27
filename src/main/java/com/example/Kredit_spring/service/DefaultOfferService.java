@@ -31,13 +31,13 @@ public class DefaultOfferService implements OfferService {
         if (isNull(offerDto.getSumma()) || offerDto.getSumma() == 0) {
             throw new ValidationException("Отсутствует сумма кредита");
         }
-        if (isNull(offerDto.getId_graph()) || offerDto.getId_graph() == 0) {
-            throw new ValidationException("Отсутствует график кредита");
-        }
+//        if (isNull(offerDto.getId_graph()) || offerDto.getId_graph() == 0) {
+//            throw new ValidationException("Отсутствует график кредита");
+//        }
         if (isNull(offerDto.getId_klient()) || offerDto.getId_klient() == 0) {
             throw new ValidationException("Клиент не выбран");
         }
-        if (isNull(offerDto.getId_krerdit()) || offerDto.getId_krerdit() == 0) {
+        if (isNull(offerDto.getId_kredit()) || offerDto.getId_kredit() == 0) {
             throw new ValidationException("Кредит не указан");
         }
     }

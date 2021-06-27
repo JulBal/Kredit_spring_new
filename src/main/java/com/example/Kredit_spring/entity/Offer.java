@@ -13,7 +13,7 @@ public class Offer {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @Column
-    private int id_krerdit;
+    private int id_kredit;
     @Column
     private int id_klient;
     @Column

@@ -89,7 +89,7 @@
                         '        <td>' + klient.fone + '</td>\n' +
                         '        <td>' + klient.pasport + '</td>' +
                         '        <td><button onclick="deleteKlient(' + klient.pasport + ')">Удалить клиента</button>'+
-                        '<button onclick="document.location=\'http://localhost:8081/offerForm\'">Оформить кредит</button></td></tr>';
+                        '<button onclick="document.location=\'http://localhost:8081/offerForm?id_klient='+klient.id+'\'">Оформить кредит</button></td></tr>';
                   //      '<button onclick="getFio(' + klient.id + ')">Оформить кредит</button></td></tr>';
                         document.getElementById("klientsList").innerHTML = html;
             }
@@ -143,7 +143,7 @@
                         '        <td><button onclick="deleteKlient(' + klient.id + ')">Удалить клиента</button>' +
                      //   '<button onclick="getFio(' + klient.pasport + ')">Оформить кредит</button></td></tr>'+
                     //    ' <button onclick="document.location=\'http://localhost:8081/offerForm\'+getFio('+klient.id+')">Оформить кредит</button></td></tr>';
-                        '<button onclick="document.location=\'http://localhost:8081/offerForm\'">Оформить кредит</button></td></tr>';
+                        '<button onclick="document.location=\'http://localhost:8081/offerForm?id_klient='+klient.id+'\'">Оформить кредит</button></td></tr>';
 
                 }
                 document.getElementById("klientsList").innerHTML = html;

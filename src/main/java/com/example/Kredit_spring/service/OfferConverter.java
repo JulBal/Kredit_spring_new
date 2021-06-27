@@ -11,7 +11,7 @@ public class OfferConverter {
         offer.setId(offerDto.getId());
         offer.setId_graph(offerDto.getId_graph());
         offer.setId_klient(offerDto.getId_klient());
-        offer.setId_krerdit(offerDto.getId_krerdit());
+        offer.setId_kredit(offerDto.getId_kredit());
         offer.setSumma(offerDto.getSumma());
         return offer;
     }
@@ -20,7 +20,7 @@ public class OfferConverter {
               .id(offer.getId())
               .id_graph(offer.getId_graph())
               .id_klient(offer.getId_klient())
-              .id_krerdit(offer.getId_krerdit())
+              .id_kredit(offer.getId_kredit())
               .summa(offer.getSumma())
               .build();
     }

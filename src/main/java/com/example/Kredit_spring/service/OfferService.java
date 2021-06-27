@@ -10,6 +10,7 @@ import java.util.List;
 public interface OfferService {
     OfferDto saveOffer(OfferDto offerDto) throws ValidationException;
     void deleteOffer(Integer id_offer);
+
   //  List<OfferDto> findKlientOffer(Integer id_klient);
    // List<GraphDto> findGraphKlientOffer(Integer id_klient);
     List<OfferDto> findAll();

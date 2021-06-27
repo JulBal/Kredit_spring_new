@@ -32,20 +32,22 @@
 
 <table id="offerList"></table>
 <form action="#">
-    <input id="offer_klient" placeholder="FIO">
+    <input id="offer_klient" placeholder="FIO" th:value="${klient.id}">
     <input id="offer_kreditVid" placeholder="Вид кредита">
     <input id="offer_summa" placeholder="Сумма кредита">
+    <input id="offer_graph" placeholder="График">
     <button onclick="createOffer()">Оформить</button>
 </form>
+
 <script>
     function createOffer() {
         var id_klient = document.getElementById("offer_klient").value;
         var id_kredit = document.getElementById("offer_kreditVid").value;
         var summa = document.getElementById("offer_summa").value;
-        var id_graph =0;
+        var id_graph =document.getElementById("offer_graph").value;
 
         var xmlhttp = new XMLHttpRequest();
-        xmlhttp.open("POST", "http://localhost:8081/offerForm/offer/save");
+        xmlhttp.open("POST", "http://localhost:8081/offer/save");
         xmlhttp.setRequestHeader("Content-Type", "application/json");
         xmlhttp.send(JSON.stringify({id_kredit:id_kredit, id_klient: id_klient , summa: summa, id_graph: id_graph }));
         xmlhttp.onreadystatechange = function () {
@@ -89,7 +91,7 @@
         xhttp.open("GET", "http://localhost:8081/offer/findAll", true);
         xhttp.send();
     }
-    createOffer();
+    loadOffer();
 
 
 </script>
