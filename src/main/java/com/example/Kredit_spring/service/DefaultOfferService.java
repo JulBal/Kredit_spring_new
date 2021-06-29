@@ -22,8 +22,8 @@ import static java.util.Objects.isNull;
 public class DefaultOfferService implements OfferService {
     private final OfferConverter offerConverter;
     private final OfferRepository offerRepository;
-   // private final GraphRepository graphRepository;
-  //  private final GraphConverter graphConverter;
+//    private final GraphRepository graphRepository;
+//    private final GraphConverter graphConverter;
     private void validateOfferDto(OfferDto offerDto) throws ValidationException {
         if (isNull(offerDto)) {
             throw new ValidationException("Кредитное предложение отсутствует!");
@@ -34,9 +34,9 @@ public class DefaultOfferService implements OfferService {
 //        if (isNull(offerDto.getId_graph()) || offerDto.getId_graph() == 0) {
 //            throw new ValidationException("Отсутствует график кредита");
 //        }
-        if (isNull(offerDto.getId_klient()) || offerDto.getId_klient() == 0) {
-            throw new ValidationException("Клиент не выбран");
-        }
+//        if (isNull(offerDto.getId_klient()) || offerDto.getId_klient() == 0) {
+//            throw new ValidationException("Клиент не выбран");
+//        }
         if (isNull(offerDto.getId_kredit()) || offerDto.getId_kredit() == 0) {
             throw new ValidationException("Кредит не указан");
         }
@@ -53,6 +53,7 @@ public class DefaultOfferService implements OfferService {
     public void deleteOffer(Integer id_offer) {
         offerRepository.deleteById(id_offer);
     }
+
 
 //    @Override
 //    public List<OfferDto> findKlientOffer(Integer id_klient) {

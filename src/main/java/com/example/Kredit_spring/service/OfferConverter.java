@@ -13,6 +13,7 @@ public class OfferConverter {
         offer.setId_klient(offerDto.getId_klient());
         offer.setId_kredit(offerDto.getId_kredit());
         offer.setSumma(offerDto.getSumma());
+        offer.setSrok(offerDto.getSrok());
         return offer;
     }
     public OfferDto fromOffertoOfferDto(Offer offer){
@@ -22,6 +23,7 @@ public class OfferConverter {
               .id_klient(offer.getId_klient())
               .id_kredit(offer.getId_kredit())
               .summa(offer.getSumma())
+              .srok(offer.getSrok())
               .build();
     }
 }

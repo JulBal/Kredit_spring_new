@@ -20,4 +20,6 @@ public class Offer {
     private double summa;
     @Column
     private int id_graph;
+    @Column
+    private int srok;
 }

@@ -29,27 +29,44 @@
 <body>
 <h2>Оформление кредита</h2>
 
+<!--<form action="#">-->
 
+<!--    <input id="graph_id" placeholder="ID">-->
+<!--    <input id="graph_data" placeholder="Дата платежа">-->
+<!--    <input id="graph_summa" placeholder="Сумма платежа">-->
+<!--    <input id="graph_summa_osn" placeholder="Тело кредита">-->
+<!--    <input id="graph_summa_proc" placeholder="Процент">-->
+
+<!--</form>-->
 <table id="offerList"></table>
 <form action="#">
-    <input id="offer_klient" placeholder="FIO" th:value="${klient.id}">
-    <input id="offer_kreditVid" placeholder="Вид кредита">
+    <input id="offer_klient" placeholder="Клиент" th:value="${klient.id}" th:utext="${klient.getFio()}"/>
+    <select id="selectKreditVid" th:field="*{kreditVid}">
+        <option value="">Вид кредита</option>
+        <option th:each="kredit : ${kreditVid}"
+                th:value="${kredit.getId()}"
+                th:utext="${'%'+kredit.getStavka()+'(лимит '+kredit.getLimit()+')'}"/>
+    </select>-->
+
     <input id="offer_summa" placeholder="Сумма кредита">
-    <input id="offer_graph" placeholder="График">
+    <input id="offer_srok" placeholder="Срок(года)">
     <button onclick="createOffer()">Оформить</button>
 </form>
+<table id="graphList"></table>
 
 <script>
     function createOffer() {
         var id_klient = document.getElementById("offer_klient").value;
-        var id_kredit = document.getElementById("offer_kreditVid").value;
+        var id_kredit = document.getElementById("selectKreditVid").value;
         var summa = document.getElementById("offer_summa").value;
-        var id_graph =document.getElementById("offer_graph").value;
+        var srok = document.getElementById("offer_srok").value;
+        var id_graph = 0;
+
 
         var xmlhttp = new XMLHttpRequest();
         xmlhttp.open("POST", "http://localhost:8081/offer/save");
         xmlhttp.setRequestHeader("Content-Type", "application/json");
-        xmlhttp.send(JSON.stringify({id_kredit:id_kredit, id_klient: id_klient , summa: summa, id_graph: id_graph }));
+        xmlhttp.send(JSON.stringify({id_kredit: id_kredit, id_klient: id_klient, summa: summa, id_graph: id_graph,srok:srok}));
         xmlhttp.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 200) {
                 loadOffer();
@@ -57,6 +74,38 @@
 
         }
     }
+    function deleteOffer(kreditId) {
+        var xhtpp = new XMLHttpRequest();
+        xhtpp.open("DELETE", "http://localhost:8081/offer/delete/" + kreditId, true);
+        xhtpp.send();
+    }
+    function insertGraph(offerId) {
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                var graph = JSON.parse(this.responseText);
+                var html = '<tr>\n' +
+                    '        <th>ID</th>\n' +
+                    '        <th>Дата платежа</th>\n' +
+                    '        <th>Сумма платежа</th>\n' +
+                    '        <th>Тело кредита</th>\n' +
+                    '        <th>Процент</th>\n' +
+                    '    </tr>';
+               
+
+                    html = html + '<tr>' +
+                    '        <td>' + graph.id + '</td>\n' +
+                    '        <td>' + graph.data + '</td>\n' +
+                    '        <td>' + graph.summa + '</td>\n' +
+                    '        <td>' + graph.summa_osn + '</td>\n' +
+                    '        <td>' + graph.summa_proc + '</td>' ;
+                document.getElementById("graphList").innerHTML = html;
+            }
+        };
+        xhttp.open("GET", "http://localhost:8081/graph/findGraph?offer=" + offerId, true);
+        xhttp.send();
+    }
+
 
     function loadOffer() {
         var xhttp = new XMLHttpRequest();
@@ -69,7 +118,7 @@
                     '        <th>Клиент</th>\n' +
                     '        <th>Вид кредита</th>\n' +
                     '        <th>Сумма кредита</th>\n' +
-                    '        <th>График</th>\n' +
+                    '        <th>Срок(года)</th>\n' +
                     '        <th>Действия</th>' +
                     '    </tr>';
                 for (var i = 0; i < offers.length; i++) {
@@ -80,9 +129,12 @@
                         '        <td>' + offer.id + '</td>\n' +
                         '        <td>' + offer.id_klient + '</td>\n' +
                         '        <td>' + offer.id_kredit + '</td>\n' +
-                        '        <td>' + offer.summa+ '</td>\n' +
-                        '        <td>' + offer.id_graph+ '</td>\n' +
-                        '        <td><button onclick="deleteOffer(' + offer.id + ')">Удалить кредит</button>' ;
+                        '        <td>' + offer.summa + '</td>\n' +
+                        '        <td>' + offer.srok + '</td>\n' +
+                        '        <td><button onclick="deleteOffer(' + offer.id + ')">Удалить кредит</button>'+
+                    '        <td><button onclick="insertGraph(' + offer.id + ')">Сформировать график</button>'
+
+                    ;
 
                 }
                 document.getElementById("offerList").innerHTML = html;
@@ -90,7 +142,9 @@
         };
         xhttp.open("GET", "http://localhost:8081/offer/findAll", true);
         xhttp.send();
+
     }
+
     loadOffer();
 
 

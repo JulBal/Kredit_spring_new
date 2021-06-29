@@ -90,23 +90,18 @@
                         '        <td>' + klient.pasport + '</td>' +
                         '        <td><button onclick="deleteKlient(' + klient.pasport + ')">Удалить клиента</button>'+
                         '<button onclick="document.location=\'http://localhost:8081/offerForm?id_klient='+klient.id+'\'">Оформить кредит</button></td></tr>';
-                  //      '<button onclick="getFio(' + klient.id + ')">Оформить кредит</button></td></tr>';
-                        document.getElementById("klientsList").innerHTML = html;
+                                        document.getElementById("klientsList").innerHTML = html;
             }
         };
         xhttp.open("GET", "http://localhost:8081/klient/findPasport?pasport=" + pasport, true);
         xhttp.send();
     }
     function getFio(klientId) {
-   //     document.location='http://localhost:8081/offerForm';
         var xmlhttp = new XMLHttpRequest();
         xmlhttp.open("POST", "http://localhost:8081/offer/save");
         xmlhttp.setRequestHeader("Content-Type", "application/json");
         xmlhttp.send(JSON.stringify({id_krerdit:1,id_klient: klientId,summa:0.00,id_graph:0}));
-        // xhtpp.open("GET", "http://localhost:8081/offerForm", true);
-        // xhtpp.send();
 
-   //     document.location='http://localhost:8081/klient/getFio?pasport="+ pasport'
 
     }
 

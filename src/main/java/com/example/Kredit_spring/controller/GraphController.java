@@ -32,5 +32,10 @@ public class GraphController {
         graphService.deleteGraph(id);
         return ResponseEntity.ok().build();
     }
+    @GetMapping("/findGraph")
+    public List<GraphDto> findPasport(@RequestParam Integer offer){
+        log.info("Формирование графика");
+        return graphService.createGraphPayment(offer);
+    }
 
 }

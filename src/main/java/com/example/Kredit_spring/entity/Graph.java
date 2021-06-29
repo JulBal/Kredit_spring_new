@@ -2,6 +2,7 @@ package com.example.Kredit_spring.entity;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Table(name = "graph")
@@ -15,7 +16,7 @@ public class Graph {
     @Column
     private  double summa;
     @Column
-    private String data;
+    private Date data;
     @Column
     private double summa_osn;
     @Column

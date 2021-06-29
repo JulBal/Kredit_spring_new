@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
+
 @Builder
 @Data
 @NoArgsConstructor
@@ -12,7 +14,7 @@ import lombok.NoArgsConstructor;
 public class GraphDto {
     private int id;
     private  double summa;
-    private String data;
+    private Date data;
     private double summa_osn;
     private double summa_proc;
     private int id_graph;

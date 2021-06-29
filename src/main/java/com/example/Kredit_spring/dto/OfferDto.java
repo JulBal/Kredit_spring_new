@@ -15,5 +15,6 @@ public class OfferDto {
     private int id_klient;
     private double summa;
     private int id_graph;
+    private int srok;
 }
 
