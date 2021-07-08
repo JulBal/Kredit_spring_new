@@ -33,9 +33,9 @@ public class GraphController {
         return ResponseEntity.ok().build();
     }
     @GetMapping("/findGraph")
-    public List<GraphDto> findPasport(@RequestParam Integer offer){
+    public List<GraphDto> findPasport(@RequestParam Integer id_graph){
         log.info("Формирование графика");
-        return graphService.createGraphPayment(offer);
+        return graphService.findGraph(id_graph);
     }
 
 }

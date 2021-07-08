@@ -77,7 +77,7 @@ public class DefaultGraphService implements GraphService {
             for (int i = 0; i <= period; i++) {
                 pamentData.add(Calendar.MONTH, +i);
                 graph.setData(pamentData.getTime());
-                graph.setId_graph(offerDto.getId_klient());/*уник код для связи с клиентом*/
+                graph.setId_graph(offerDto.getId_klient());
                 graph.setSumma(summa_mes);/*месячный платеж*/
                 graph.setSumma_osn(offerDto.getSumma() / period);
                 graph.setSumma_proc(summa_mes - offerDto.getSumma() / period);
@@ -116,6 +116,7 @@ public class DefaultGraphService implements GraphService {
     }
     @Override
     public List<GraphDto> findAll() {
+
         return  graphRepository.findAll().stream().map(graphConverter::fromGraphtoGraphDto).collect(Collectors.toList());
     }
 
